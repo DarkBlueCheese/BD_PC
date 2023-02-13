@@ -42,20 +42,28 @@ class CSVMapper(MRJob):
 
 
 ###
-    def reducer2(self, gram_year, gram_word_sums):
-        # gram_word, gram_year = gram_year_list
-        # # gram_year_count = (gram_word, gram_year, gram_counts_sum)
-        # year_count = (gram_year, gram_counts_sum)
-        # cheater_value, cheater_key = max(gram_counts_sum)
-        max_sums = 0
-        max_word = None
-        for word, sums in gram_word_sums:
-            if sums > max_sums:
-                max_sums = sums
-                max_word = word
+    # def reducer2(self, gram_year, gram_word_sums):
+    #     # gram_word, gram_year = gram_year_list
+    #     # # gram_year_count = (gram_word, gram_year, gram_counts_sum)
+    #     # year_count = (gram_year, gram_counts_sum)
+    #     # cheater_value, cheater_key = max(gram_counts_sum)
+    #     max_sums = 0
+    #     max_word = None
+    #     for word, sums in gram_word_sums:
+    #         if sums > max_sums:
+    #             max_sums = sums
+    #             max_word = word
 
-        # yield (None, max(gram_counts_sum, key = lambda x : x[1]))
-        yield None, (gram_year, max_word, max_sums)
+    #     # yield (None, max(gram_counts_sum, key = lambda x : x[1]))
+    #     yield None, (gram_year, max_word, max_sums)
+
+
+    def reducer2(self, gram_year, gram_word_sums):
+
+        yield None, (gram_year, *max(gram_word_sums, key = lambda x : x[1]))
+
+
+
 
     # def reducer2(self, _, values):
     #     cheater_value, cheater_key = max(values)
