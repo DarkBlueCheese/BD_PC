@@ -10,13 +10,13 @@ import csv
 # 4) number of pages on which the n-gram appeared in this year (page-count)
 # 5) number of distinct books in which the n-gram appeared in this year (book count)
 
-class NGramMapper(MRJob):
+class NGrammer(MRJob):
     
     def mapper1(self, _, line):
         # reader = csv.reader([line], delimiter='\t')
         reader = line.split('\t')
         for row in [reader]:
-            yield (row[0], int(row[2]))
+            yield (row[0], int(row[2])) # (key, value)
     
     # 32968   "Protein synthesis"
 
@@ -24,7 +24,7 @@ class NGramMapper(MRJob):
     #     yield key, sum(values)
 
     def reducer1(self, key, values):
-        yield (None, (sum(values), key))
+        yield (None, (sum(values), key)) # key = None, value = (sum(values), key)
 
 ###
     def reducer2(self, _, values):
@@ -40,4 +40,4 @@ class NGramMapper(MRJob):
     #     yield(None, (sum(values[])))
 
 if __name__ == '__main__':
-    NGramMapper.run()
+    NGrammer.run()

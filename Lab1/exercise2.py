@@ -10,14 +10,14 @@ import csv
 # 4) number of pages on which the n-gram appeared in this year (page-count)
 # 5) number of distinct books in which the n-gram appeared in this year (book count)
 
-class CSVMapper(MRJob):
+class NGrammer(MRJob):
     
     def mapper1(self, _, line):
         # reader = csv.reader([line], delimiter='\t')
         reader = line.split('\t')
         for row in [reader]:
             # yield ((row[0], int(row[1])),  int(row[2]))
-            yield ((row[0], row[1]),  int(row[2]))
+            yield ((row[0], row[1]), int(row[2])) 
 
             # yield ((row[0], int(row[1])))
     
@@ -38,7 +38,7 @@ class CSVMapper(MRJob):
     def mapper2(self, gram_year_list, gram_count_sums) :
         gram_word, gram_year = gram_year_list
 
-        yield (gram_year, (gram_word, gram_count_sums))
+        yield (gram_year, (gram_word, gram_count_sums)) 
 
 
 ###
@@ -79,4 +79,4 @@ class CSVMapper(MRJob):
     #     yield(None, (sum(values[])))
 
 if __name__ == '__main__':
-    CSVMapper.run()
+    NGrammer.run()
